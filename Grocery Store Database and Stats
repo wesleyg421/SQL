@@ -1,0 +1,39 @@
+CREATE TABLE store_inventory (id INTEGER PRIMARY KEY, Item TEXT, section TEXT, quantity INTEGER, price INTEGER, Popularity INTEGER);
+INSERT INTO store_inventory VALUES (1, "bananas", "produce", "19", "1.99", "65%");
+INSERT INTO store_inventory VALUES (2, "apples", "produce", "34", "1.39", "35%");
+INSERT INTO store_inventory VALUES (3, "oranges", "produce", "28", "1.25", "26%");
+INSERT INTO store_inventory VALUES (4, "pears", "produce", "12", "1.69", "22%");
+INSERT INTO store_inventory VALUES (5, "strawberries", "produce", "21", "0.99", "78%");
+INSERT INTO store_inventory VALUES (6, "watermelons", "produce", "6", "5.99", "67%");
+INSERT INTO store_inventory VALUES (7, "jars of pickles", "produce", "9", "2.49", "11%");
+INSERT INTO store_inventory VALUES (8, "sacks of potatos", "bulk",  "7", "9.99", "33%");
+INSERT INTO store_inventory VALUES (9, "super protein powder", "health", "11", "11.99", "27%");
+INSERT INTO store_inventory VALUES (10, "cucumbers", "produce", "14", "1.99", "41%");
+INSERT INTO store_inventory VALUES (11, "chopped lettuce", "produce", "9", "4.39", "22%");
+INSERT INTO store_inventory VALUES (12, "bell peppers", "spices/peppers", "19", "0.99", "12%");
+INSERT INTO store_inventory VALUES (13, "onions", "bulk", "37", "0.99", "68%");
+INSERT INTO store_inventory VALUES (14, "chili pepper", "spices/pepper", "8", "0.45", "13%");
+INSERT INTO store_inventory VALUES (15, "carolina reaper peppers", "spices/peppers", "3", "0.89", "29%");
+INSERT INTO store_inventory VALUES (16, "colgate toothpaste", "health", "14", "4.29", "68%");
+INSERT INTO store_inventory VALUES (17, "premium dog food", "pet supplies", "4", "13.99", "33%");
+INSERT INTO store_inventory VALUES (18, "premium cat food", "pet supplies", "3", "11.99", "27%");
+INSERT INTO store_inventory VALUES (19, "kitty litter", "pet supplies", "4", "9.99", "13%");
+INSERT INTO store_inventory VALUES (20, "toilet paper", "health", "17", "12.89", "45%");
+
+--display items in order of lowest quantity remaining.
+SELECT * FROM store_inventory WHERE quantity ORDER BY quantity asc;
+
+--display the database ordered by price. 
+SELECT * FROM store_inventory
+ORDER BY price desc; 
+
+--what is the avg price of items in the produce section? 
+SELECT AVG(price) "avg produce item price"
+FROM store_inventory
+where section='produce';
+
+--what are the most 5 popular items? 
+SELECT item, price, popularity
+FROM store_inventory
+order by popularity desc
+limit 5; 
