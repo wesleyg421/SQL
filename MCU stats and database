@@ -1,0 +1,60 @@
+/* Create table about the people and what they do here */
+create table mcu (id INTEGER PRIMARY KEY AUTOINCREMENT, fullname TEXT, age INTEGER, superpowers TEXT, weapons TEXT, hair_color TEXT, height INTEGER, movies TEXT, actor TEXT, affiliation TEXT, alias TEXT);
+INSERT INTO mcu (fullname, age, superpowers, weapons, hair_color, height, movies, actor, affiliation, alias) VALUES ("tony stark", "51", "n/a", "nanosuit", "brown", "6'1", "11", "robert downey jr", "avengers", "ironman");
+INSERT INTO mcu (fullname, age, superpowers, weapons, hair_color, height, movies, actor, affiliation, alias) VALUES ("steve rogers", "105", "super soldier serum", "vibranium shield", "blonde", "6'2", "11", "chris evans", "avengers", "captain america");
+INSERT INTO mcu (fullname, age, superpowers, weapons, hair_color, height, movies, actor, affiliation, alias) VALUES ("natasha romanoff", "39", "n/a", "various", "red", "5'7", "8", "scarlett johnansson", "s.h.i.e.l.d/avengers", "black widow");
+INSERT INTO mcu (fullname, age, superpowers, weapons, hair_color, height, movies, actor, affiliation, alias) VALUES ("bruce banner", "53", "various", "n/a", "brown", "5'9/7'8", "9", "mark ruffalo", "avengers", "hulk");
+INSERT INTO mcu (fullname, age, superpowers, weapons, hair_color, height, movies, actor, affiliation, alias) VALUES ("thor odinson", "1500", "various", "stormbreaker", "blonde", "6'6", "8", "chris hemsworth", "avengers", "god of thunder");
+INSERT INTO mcu (fullname, age, superpowers, weapons, hair_color, height, movies, actor, affiliation, alias) VALUES ("clint barton", "52", "n/a", "various", "brown", "6'3", "5", "jeremy renner", "avengers", "hawkeye/ronin");
+INSERT INTO mcu (fullname, age, superpowers, weapons, hair_color, height, movies, actor, affiliation, alias) VALUES ("wanda maximoff", "29", "various", "n/a", "auburn", "5'7", "6", "elizabeth olsen", "avengers", "scarlet witch");
+INSERT INTO mcu (fullname, age, superpowers, weapons, hair_color, height, movies, actor, affiliation, alias) VALUES ("vision", "3", "various", "mindstone", "n/a", "6'3", "3", "paul bettany", "avengers", "n/a");
+INSERT INTO mcu (fullname, age, superpowers, weapons, hair_color, height, movies, actor, affiliation, alias) VALUES ("james rhodes", "53", "n/a", "various", "brown", "6'1", "7", "don cheadle", "us airforce", "war machine");
+INSERT INTO mcu (fullname, age, superpowers, weapons, hair_color, height, movies, actor, affiliation, alias) VALUES ("sam wilson", "40", "n/a", "various", "brown", "6'", "6", "anthony mackie", "us airforce", "falcon");
+INSERT INTO mcu (fullname, age, superpowers, weapons, hair_color, height, movies, actor, affiliation, alias) VALUES ("peter parker", "17", "various", "iron spidersuit", "brown", "5'7", "6", "tom holland", "avengers", "spiderman");
+INSERT INTO mcu (fullname, age, superpowers, weapons, hair_color, height, movies, actor, affiliation, alias) VALUES ("peter quill", "38", "n/a", "element gun", "strawberry blonde", "6'2", "4", "chris pratt", "guardians of the galaxy", "star-lord");
+INSERT INTO mcu (fullname, age, superpowers, weapons, hair_color, height, movies, actor, affiliation, alias) VALUES ("89P13", "13", "super intelligence", "various", "brown", "3'1", "4", "bradley cooper", "guardians of the galaxy", "rocket racoon");
+
+create table mcu_actors (id INTEGER PRIMARY KEY AUTOINCREMENT, fullname TEXT, age INTEGER, nationality TEXT);
+INSERT INTO mcu_actors (fullname, age, nationality) VALUES ("robert downey jr", "57", "american");
+INSERT INTO mcu_actors (fullname, age, nationality) VALUES ("chris evans", "41", "american");
+INSERT INTO mcu_actors (fullname, age, nationality) VALUES ("scarlett johansson", "37", "american/danish");
+INSERT INTO mcu_actors (fullname, age, nationality) VALUES ("mark ruffalo", "54", "american");
+INSERT INTO mcu_actors (fullname, age, nationality) VALUES ("chris hemsworth", "38", "australian");
+INSERT INTO mcu_actors (fullname, age, nationality) VALUES ("jeremy renner", "51", "american");
+INSERT INTO mcu_actors (fullname, age, nationality) VALUES ("elizabeth olsen", "33", "american");
+INSERT INTO mcu_actors (fullname, age, nationality) VALUES ("paul bettany", "51", "british");
+INSERT INTO mcu_actors (fullname, age, nationality) VALUES ("don cheadle", "57", "american");
+INSERT INTO mcu_actors (fullname, age, nationality) VALUES ("anthony mackie", "43", "american");
+INSERT INTO mcu_actors (fullname, age, nationality) VALUES ("tom holland", "26", "british");
+INSERT INTO mcu_actors (fullname, age, nationality) VALUES ("chris pratt", "42", "american");
+INSERT INTO mcu_actors (fullname, age, nationality) VALUES ("bradley cooper", "47", "american");
+
+create table post_endgame (id INTEGER PRIMARY KEY AUTOINCREMENT, deceased TEXT, offworld TEXT);
+INSERT INTO post_endgame (deceased, offworld) VALUES ("yes", "no");
+INSERT INTO post_endgame (deceased, offworld) VALUES ("no", "no");
+INSERT INTO post_endgame (deceased, offworld) VALUES ("yes", "yes");
+INSERT INTO post_endgame (deceased, offworld) VALUES ("no", "no");
+INSERT INTO post_endgame (deceased, offworld) VALUES ("no", "yes");
+INSERT INTO post_endgame (deceased, offworld) VALUES ("no", "no");
+INSERT INTO post_endgame (deceased, offworld) VALUES ("no", "no");
+INSERT INTO post_endgame (deceased, offworld) VALUES ("yes", "no");
+INSERT INTO post_endgame (deceased, offworld) VALUES ("no", "no");
+INSERT INTO post_endgame (deceased, offworld) VALUES ("no", "no");
+INSERT INTO post_endgame (deceased, offworld) VALUES ("no", "no");
+INSERT INTO post_endgame (deceased, offworld) VALUES ("no", "yes");
+INSERT INTO post_endgame (deceased, offworld) VALUES ("no", "yes");
+
+/*Which mcu character(s) are deceased and have appeared in the most movies?*/
+select mcu.fullname, min(movies) as movies, post_endgame.deceased
+from mcu
+join post_endgame;
+/*What is the average age of the mcu characters listed?*/
+select avg(age) as total_average_age
+from mcu;
+/*Which mcu characters listed do not have superpowers?*/
+select mcu.fullname, b.superpowers
+from mcu
+join mcu b
+on mcu.id = b.id
+order by b.superpowers = "n/a" desc;
+
