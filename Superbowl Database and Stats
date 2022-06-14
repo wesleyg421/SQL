@@ -96,4 +96,4 @@ limit 1;
 
 --what is the average winning and losing scores during the superbowl?
 select avg(Winner_pts) as Avg_Winning_Pts, avg(Loser_Pts) as Avg_Losing_Pts
-from superbowls
+from superbowls;
