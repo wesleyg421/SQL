@@ -33,8 +33,15 @@ SELECT artist_name, track_name, avg(popularity), avg(danceability), avg(energy)
 FROM BIT_DB.spotifydata
 GROUP BY artist_name, track_name;
 
---#Then I determined who the Top 10 artists are by popularity
+--#Then I determined who the Top 10 artists are by popularity.
 SELECT track_name, artist_name, popularity
 FROM BIT_DB.spotifydata
 ORDER BY popularity desc
 LIMIT 10;
+
+--#finally i combined the data together in relation with loudness.
+SELECT artist_name, track_name, loudness, avg(popularity), avg(danceability), avg(energy)
+from Spotifydata
+group by artist_name
+order by avg(popularity) desc
+limit 10
