@@ -44,4 +44,4 @@ SELECT artist_name, track_name, loudness, avg(popularity), avg(danceability), av
 from Spotifydata
 group by artist_name
 order by avg(popularity) desc
-limit 10
+limit 10;
