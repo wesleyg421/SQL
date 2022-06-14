@@ -1,84 +1,84 @@
-#1. How many orders were placed in January? 
-/*select count (orderID)
-from BIT_DB.JanSales;*/
+--#1. How many orders were placed in January? 
+select count (orderID)
+from BIT_DB.JanSales;
 
-#2. How many of those orders were for an iPhone?
-/*select count (Quantity)
+--#2. How many of those orders were for an iPhone?
+select count (Quantity)
 from BIT_DB.JanSales
-where Product='iPhone';*/
+where Product='iPhone';
 
-#3. Select the customer account numbers for all the orders that were placed in February.
-/*select acctnum
+--#3. Select the customer account numbers for all the orders that were placed in February.
+select acctnum
 from customers
 join FebSales
-on customers.order_id=FebSales.orderID*/
+on customers.order_id=FebSales.orderID
 
-#4. Which product was the cheapest one sold in January, and what was the price?
-/*select distinct product, price
+--#4. Which product was the cheapest one sold in January, and what was the price?
+select distinct product, price
 from JanSales
 group by product, price
 order by min(price)
-limit 1;*/
+limit 1;
 
-#5. What is the total revenue for each product sold in January?
-/*select sum(Quantity)*price as revenue, Product
+--#5. What is the total revenue for each product sold in January?
+select sum(Quantity)*price as revenue, Product
 from JanSales
 group by product
-order by revenue desc;*/
+order by revenue desc;
 
-#6. Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, how many of each were sold, and what was the total revenue?
-/*select product, sum(Quantity) as total_sold, sum(Quantity)*price as revenue
+--#6. Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, how many of each were sold, and what was the total revenue?
+select product, sum(Quantity) as total_sold, sum(Quantity)*price as revenue
 from FebSales
 where location="548 Lincoln St, Seattle, WA 98101"
-group by product;*/
+group by product;
 
-#7. How many customers ordered more than 2 products at a time, and what was the average amount spent for those customers? 
-/*select count(customers.acctnum), avg(quantity)*price
+--#7. How many customers ordered more than 2 products at a time, and what was the average amount spent for those customers? 
+select count(customers.acctnum), avg(quantity)*price
 from FebSales
 left join customers
 on FebSales.orderID = Customers.order_id
-where FebSales.Quantity > 2;*/
+where FebSales.Quantity > 2;
 
-#8. List all the products sold in Los Angeles in February, and include how many of each were sold.
-/*select distinct product, sum(quantity), location
+--#8. List all the products sold in Los Angeles in February, and include how many of each were sold.
+select distinct product, sum(quantity), location
 from FebSales
 where location like '%Los Angeles%'
-group by product*/
+group by product
 
-#9. Which locations in New York received at least 3 orders in January, and how many orders did they each receive?
-/*select location, count(orderID)
+--#9. Which locations in New York received at least 3 orders in January, and how many orders did they each receive?
+select location, count(orderID)
 from JanSales
 where location like '%New York%'
 group by location
-having count(orderID)>2;*/
+having count(orderID)>2;
 
-#10. How many of each type of headphone were sold in February?
-/*select product, sum(quantity) as quantity
+--#10. How many of each type of headphone were sold in February?
+select product, sum(quantity) as quantity
 from FebSales
 where product like '%headphone%'
-group by product;*/
+group by product;
 
-#11. What was the average amount spent per account in February?
+--#11. What was the average amount spent per account in February?
 --(the overall average, not the average for each account individually)
-/*select avg(quantity*price) as average_spent
+select avg(quantity*price) as average_spent
 from FebSales
 left join customers
-on customers.order_id=FebSales.orderID;*/
+on customers.order_id=FebSales.orderID;
 --    #OR#
-/*SELECT sum(quantity*price)/count(cust.acctnum) as average_spent
+SELECT sum(quantity*price)/count(cust.acctnum) as average_spent
 FROM FebSales Feb
 LEFT JOIN BIT_DB.customers cust
-ON FEB.orderid=cust.order_id;*/
+ON FEB.orderid=cust.order_id;
 
-#12. What was the average quantity of products purchased per account in February?
-/*select sum(quantity)/count(cust.acctnum) as average_Quantity
+--#12. What was the average quantity of products purchased per account in February?
+select sum(quantity)/count(cust.acctnum) as average_Quantity
 from FebSales feb
 left join customers cust
-on feb.orderID=cust.order_id;*/
+on feb.orderID=cust.order_id;
 
-#13. Which product brought in the most revenue in January and how much revenue did it bring in total?
-/*select product, sum(quantity*price) as revenue
+--#13. Which product brought in the most revenue in January and how much revenue did it bring in total?
+select product, sum(quantity*price) as revenue
 from JanSales
 group by product
 order by sum(quantity*price) desc
-limit 1;*/
+limit 1;
