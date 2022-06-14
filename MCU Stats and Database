@@ -44,14 +44,16 @@ INSERT INTO post_endgame (deceased, offworld) VALUES ("no", "no");
 INSERT INTO post_endgame (deceased, offworld) VALUES ("no", "yes");
 INSERT INTO post_endgame (deceased, offworld) VALUES ("no", "yes");
 
-/*Which mcu character(s) are deceased and have appeared in the most movies?*/
+--#1. Which mcu character(s) are deceased and have appeared in the most movies?
 select mcu.fullname, min(movies) as movies, post_endgame.deceased
 from mcu
 join post_endgame;
-/*What is the average age of the mcu characters listed?*/
+
+--#2. What is the average age of the mcu characters listed?
 select avg(age) as total_average_age
 from mcu;
-/*Which mcu characters listed do not have superpowers?*/
+
+--#3. Which mcu characters listed do not have superpowers?
 select mcu.fullname, b.superpowers
 from mcu
 join mcu b
