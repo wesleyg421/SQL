@@ -1,0 +1,151 @@
+--This is A database design to store biographical and organizational information of employees in order to keep track of their performance and compute salaries.
+Includes an Entity-Relationship model and translated the model into a relational schema.
+Created Stored Procedures and Views for data insertion and retrieval.
+
+-- ==============================================
+-- MRB TRUCKING - STORED PROCEDURES & DATA SEEDING
+-- ==============================================
+
+-- Drop existing procedures if they exist
+DROP PROCEDURE IF EXISTS insert_address_type;
+DROP PROCEDURE IF EXISTS insert_employee;
+DROP PROCEDURE IF EXISTS insert_employee_role;
+DROP PROCEDURE IF EXISTS insert_employee_type;
+DROP PROCEDURE IF EXISTS insert_organization;
+DROP PROCEDURE IF EXISTS insert_person;
+
+-- ==============================================
+-- STORED PROCEDURES
+-- ==============================================
+
+DELIMITER $$
+
+-- Insert into Address_Type
+CREATE PROCEDURE insert_address_type(
+    IN p_address_id INT,
+    IN p_address_type VARCHAR(20),
+    IN p_address_description VARCHAR(100)
+)
+BEGIN
+    INSERT INTO Address_Type(address_id, address_type, address_description)
+    VALUES (p_address_id, p_address_type, p_address_description);
+END$$
+
+-- Insert into Employee
+CREATE PROCEDURE insert_employee(
+    IN p_employee_id INT,
+    IN p_employee_role_id INT,
+    IN p_employee_type_id INT,
+    IN p_organization_id INT,
+    IN p_person_id INT,
+    IN p_home_country VARCHAR(50),
+    IN p_work_country VARCHAR(50),
+    IN p_gender CHAR(1),
+    IN p_DOB DATE,
+    IN p_marital_status VARCHAR(20),
+    IN p_ethnicity VARCHAR(20)
+)
+BEGIN
+    INSERT INTO Employee(employee_id, employee_role_id, employee_type_id, organization_id, person_id,
+                         home_country, work_country, gender, DOB, marital_status, ethnicity)
+    VALUES (p_employee_id, p_employee_role_id, p_employee_type_id, p_organization_id, p_person_id,
+            p_home_country, p_work_country, p_gender, p_DOB, p_marital_status, p_ethnicity);
+END$$
+
+-- Insert into Employee_Role
+CREATE PROCEDURE insert_employee_role(
+    IN p_employee_role_id INT,
+    IN p_role_name VARCHAR(30),
+    IN p_role_desc TINYTEXT
+)
+BEGIN
+    INSERT INTO Employee_Role(employee_role_id, role_name, role_desc)
+    VALUES (p_employee_role_id, p_role_name, p_role_desc);
+END$$
+
+-- Insert into Employee_Type
+CREATE PROCEDURE insert_employee_type(
+    IN p_employee_type_id INT,
+    IN p_employee_type VARCHAR(50),
+    IN p_employee_type_desc TINYTEXT,
+    IN p_pay_type VARCHAR(10),
+    IN p_compensation_package DECIMAL(12,2)
+)
+BEGIN
+    INSERT INTO Employee_Type(employee_type_id, employee_type, employee_type_desc, pay_type, compensation_package)
+    VALUES (p_employee_type_id, p_employee_type, p_employee_type_desc, p_pay_type, p_compensation_package);
+END$$
+
+-- Insert into Organization
+CREATE PROCEDURE insert_organization(
+    IN p_organization_id INT,
+    IN p_client_org_name VARCHAR(50),
+    IN p_client_org_code INT,
+    IN p_superior_org_name VARCHAR(50),
+    IN p_availability_date DATE,
+    IN p_top_level_name VARCHAR(50),
+    IN p_iso_country_code VARCHAR(20)
+)
+BEGIN
+    INSERT INTO Organization(organization_id, client_org_name, client_org_code, superior_org_name, availability_date, top_level_name, ISO_country_code)
+    VALUES (p_organization_id, p_client_org_name, p_client_org_code, p_superior_org_name, p_availability_date, p_top_level_name, p_iso_country_code);
+END$$
+
+-- Insert into Person
+CREATE PROCEDURE insert_person(
+    IN p_person_id INT,
+    IN p_first_name VARCHAR(20),
+    IN p_middle_name VARCHAR(20),
+    IN p_last_name VARCHAR(20),
+    IN p_age INT,
+    IN p_phone_number VARCHAR(15),
+    IN p_email_id VARCHAR(100),
+    IN p_address_id INT,
+    IN p_insurance_id VARCHAR(20),
+    IN p_device_type VARCHAR(20)
+)
+BEGIN
+    INSERT INTO Person(person_id, first_name, middle_name, last_name, age, phone_number, email_id, address_id, insurance_id, device_type)
+    VALUES (p_person_id, p_first_name, p_middle_name, p_last_name, p_age, p_phone_number, p_email_id, p_address_id, p_insurance_id, p_device_type);
+END$$
+
+DELIMITER ;
+
+-- ==============================================
+-- SEEDING MASTER DATA
+-- ==============================================
+
+-- Employee Roles
+CALL insert_employee_role (1, 'Long Haul Driver', 'Operates tractor-trailers across state lines');
+CALL insert_employee_role (2, 'Local Delivery Driver', 'Handles local freight deliveries within the city/region');
+CALL insert_employee_role (3, 'Maintenance Technician', 'Performs routine truck and trailer maintenance');
+CALL insert_employee_role (4, 'Flatbed Driver', 'Operates standard flatbed trucks for freight hauling');
+
+-- Address Types
+CALL insert_address_type (1, 'Home', 'Residential address');
+CALL insert_address_type (2, 'Business', 'Main company office address');
+CALL insert_address_type (3, 'Warehouse', 'Warehouse location address');
+
+-- Employee Types
+CALL insert_employee_type (1, 'Full-Time', 'Full-time dedicated driver', 'Hourly', 28.50);
+CALL insert_employee_type (2, 'Part-Time', 'Part-time or seasonal driver', 'Hourly', 20.00);
+CALL insert_employee_type (3, 'Contractor', 'Independent contracted driver', 'Per Mile', 0.60);
+CALL insert_employee_type (4, 'Full-Time', 'Full-time dedicated driver', 'Hourly', 30.00);
+
+-- Organizations
+CALL insert_organization (1, 'MRB Trucking HQ', 1001, 'MRB Logistics Group', '2020-01-01', 'MRB Holdings', 'USA');
+CALL insert_organization (2, 'MRB Trucking West', 1002, 'MRB Logistics Group', '2021-03-01', 'MRB Holdings', 'USA');
+
+-- Persons
+CALL insert_person (1, 'James', 'Allen', 'Smith', 45, '555-111-2233', 'jsmith@mrbtrucking.com', 1, 'INS12345', 'iPhone 12');
+CALL insert_person (2, 'Sarah', 'Marie', 'Johnson', 37, '555-444-5566', 'sjohnson@mrbtrucking.com', 2, 'INS67890', 'Samsung S21');
+CALL insert_person (3, 'Michael', 'Lee', 'Brown', 50, '555-777-8899', 'mbrown@mrbtrucking.com', 1, 'INS11223', 'Pixel 6');
+CALL insert_person (4, 'Emily', 'Rose', 'Davis', 29, '555-999-0000', 'edavis@mrbtrucking.com', 3, 'INS33445', 'iPhone 14');
+CALL insert_person (5, 'Robert', 'Lee', 'Carter', 41, '555-222-3344', 'rcarter@mrbtrucking.com', 1, 'INS98765', 'iPhone 13');
+
+-- Employees
+CALL insert_employee (NULL, 1, 1, 1, 1, 'USA', 'USA', 'M', '1978-05-14', 'Married', 'Caucasian');
+CALL insert_employee (NULL, 2, 2, 1, 2, 'USA', 'USA', 'F', '1986-11-22', 'Single', 'Hispanic');
+CALL insert_employee (NULL, 3, 1, 2, 3, 'USA', 'USA', 'M', '1973-04-02', 'Married', 'African American');
+CALL insert_employee (NULL, 4, 1, 2, 4, 'USA', 'USA', 'F', '1994-09-15', 'Single', 'Asian');
+CALL insert_employee (NULL, 1, 4, 1, 5, 'USA', 'USA', 'M', '1984-02-14', 'Married', 'African American');
